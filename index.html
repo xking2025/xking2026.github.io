@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>商家商机规划方案</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #ffffff;
+    color: #1e293b;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 16px; }
+  .header h1 { font-size: 24px; font-weight: 700; color: #1e293b; }
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .col { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 14px; padding: 18px; }
+  .col.plan { border-color: #3b82f6; background: linear-gradient(180deg, #eff6ff, #f8fafc); }
+  .col-label { font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: 1px; }
+  .col.cur .col-label { color: #64748b; }
+  .col.plan .col-label { color: #2563eb; }
+  .field { margin-bottom: 10px; }
+  .field-label { font-size: 13px; color: #64748b; margin-bottom: 4px; }
+  .field input[type="number"] {
+    width: 100%; padding: 8px 10px; border: 2px solid #cbd5e1; border-radius: 8px;
+    background: #fff; color: #1e293b; font-size: 18px; font-weight: 700; outline: none;
+  }
+  .field input[type="number"]:focus { border-color: #3b82f6; }
+  .field .unit { font-size: 12px; color: #94a3b8; margin-left: 6px; }
+  .inv-slider-wrap { margin-bottom: 10px; }
+  .inv-slider-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .inv-slider-header span { font-size: 13px; color: #64748b; }
+  .inv-slider-val { font-size: 22px; font-weight: 800; color: #64748b; }
+  input[type="range"].inv-range {
+    -webkit-appearance: none; width: 100%; height: 6px;
+    border-radius: 3px; background: #e2e8f0; outline: none; cursor: pointer;
+  }
+  input[type="range"].inv-range::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 20px; height: 20px;
+    border-radius: 50%; background: #64748b; cursor: pointer;
+  }
+  .inv-marks { display: flex; justify-content: space-between; margin-top: 4px; }
+  .inv-marks span { font-size: 11px; color: #94a3b8; }
+  .tier-selector { display: flex; gap: 6px; margin-bottom: 10px; }
+  .tier-btn {
+    flex: 1; padding: 8px 4px; border: 2px solid #e2e8f0; border-radius: 8px;
+    background: #fff; cursor: pointer; text-align: center; transition: all 0.2s;
+  }
+  .tier-btn:hover { border-color: #94a3b8; }
+  .tier-btn.active { border-color: #3b82f6; background: #dbeafe; }
+  .tier-btn .tier-val { font-size: 15px; font-weight: 800; color: #1e293b; display: block; }
+  .tier-btn .tier-label { font-size: 10px; color: #94a3b8; display: inline-block; margin-left: 3px; vertical-align: middle; }
+  .tier-btn.active .tier-val { color: #2563eb; }
+  .tier-btn.active .tier-label { color: #3b82f6; }
+  .slider-section { margin-top: 2px; }
+  .slider-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .slider-header span { font-size: 13px; color: #64748b; }
+  .slider-val { font-size: 22px; font-weight: 800; }
+  .slider-val.blue { color: #2563eb; }
+  .slider-val.green { color: #16a34a; }
+  input[type="range"].pct-range {
+    -webkit-appearance: none; width: 100%; height: 6px;
+    border-radius: 3px; background: #e2e8f0; outline: none; cursor: pointer;
+  }
+  input[type="range"].pct-range::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 20px; height: 20px;
+    border-radius: 50%; background: #64748b; cursor: pointer;
+  }
+  .blue-thumb input[type="range"].pct-range::-webkit-slider-thumb { background: #3b82f6; box-shadow: 0 2px 6px rgba(59,130,246,0.3); }
+  .green-thumb input[type="range"].pct-range::-webkit-slider-thumb { background: #16a34a; box-shadow: 0 2px 6px rgba(22,163,74,0.3); }
+  .slider-marks { display: flex; justify-content: space-between; margin-top: 4px; }
+  .slider-marks span { font-size: 11px; color: #94a3b8; }
+  .result-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
+  .r-box { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center; }
+  .r-box .lbl { font-size: 11px; color: #94a3b8; margin-bottom: 3px; }
+  .r-box .val { font-size: 22px; font-weight: 800; color: #1e293b; }
+  .r-box.hl-blue { border-color: #3b82f6; background: #eff6ff; }
+  .r-box.hl-blue .val { color: #2563eb; }
+  .r-box.hl-green { border-color: #16a34a; background: #f0fdf4; }
+  .r-box.hl-green .val { color: #16a34a; }
+  .growth-section { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+  .growth-section .card-title { font-size: 14px; font-weight: 600; color: #64748b; margin-bottom: 12px; }
+  .chart-wrap { position: relative; height: 220px; }
+  .note-card { background: linear-gradient(135deg, #fefce8, #fef3c7); border: 2px solid #fbbf24; border-radius: 12px; padding: 16px; }
+  .note-card .card-title { color: #92400e; margin-bottom: 10px; font-size: 14px; }
+  .note-list { list-style: none; padding: 0; }
+  .note-list li { font-size: 13px; color: #78350f; line-height: 1.7; padding: 4px 0; border-bottom: 1px dashed #fde68a; }
+  .note-list li:last-child { border-bottom: none; }
+  .note-list li strong { color: #b45309; }
+  .note-tag { display: inline-block; background: #fbbf24; color: #78350f; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; margin-right: 4px; vertical-align: middle; }
+  .diff-badge { display: inline-block; background: #22c55e; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 6px; }
+  .diff-badge.down { background: #ef4444; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>商家商机规划方案</h1></div>
+
+  <div class="compare">
+    <!-- 当前阶段 -->
+    <div class="col cur">
+      <div class="col-label">当前阶段</div>
+      <div class="field">
+        <div class="field-label">商机成本 <span class="unit">元/个</span></div>
+        <input type="number" id="costCur" value="1000" min="1" step="100">
+      </div>
+      <div class="inv-slider-wrap">
+        <div class="inv-slider-header"><span>投入金额</span><span class="inv-slider-val" id="invDispCur">¥60万</span></div>
+        <input type="range" class="inv-range" id="invCur" min="300000" max="1300000" step="10000" value="600000">
+        <div class="inv-marks"><span>30万</span><span>60万</span><span>90万</span><span>130万</span></div>
+      </div>
+      <div class="slider-section">
+        <div class="slider-header"><span>L2+ 占比</span><span class="slider-val blue" id="pct2DispCur">30%</span></div>
+        <input type="range" class="pct-range" id="pct2Cur" min="25" max="80" step="1" value="30">
+        <div class="slider-marks"><span>25%</span><span>50%</span><span>80%</span></div>
+      </div>
+      <div class="slider-section">
+        <div class="slider-header"><span>L3+ 占比</span><span class="slider-val green" id="pct3DispCur">20%</span></div>
+        <input type="range" class="pct-range" id="pct3Cur" min="15" max="60" step="1" value="20">
+        <div class="slider-marks"><span>15%</span><span>40%</span><span>60%</span></div>
+      </div>
+      <div class="result-row">
+        <div class="r-box hl-blue"><div class="lbl">L2+ 商机数</div><div class="val" id="rL2Cur">180</div></div>
+        <div class="r-box hl-green"><div class="lbl">L3+ 商机数</div><div class="val" id="rL3Cur">120</div></div>
+      </div>
+    </div>
+
+    <!-- 新方案规划 -->
+    <div class="col plan blue-thumb">
+      <div class="col-label">新方案规划</div>
+      <div class="field">
+        <div class="field-label">商机成本 <span class="unit">元/个</span></div>
+        <input type="number" id="costNew" value="1000" min="1" step="100">
+      </div>
+      <div class="tier-selector" id="tierNew">
+        <div class="tier-btn" data-val="430000"><span class="tier-val">43万</span> <span class="tier-label">三星</span></div>
+        <div class="tier-btn" data-val="600000"><span class="tier-val">60万</span> <span class="tier-label">四星</span></div>
+        <div class="tier-btn active" data-val="900000"><span class="tier-val">90万</span> <span class="tier-label">五星</span></div>
+        <div class="tier-btn" data-val="1300000"><span class="tier-val">130万</span> <span class="tier-label">五星全年</span></div>
+      </div>
+      <div class="slider-section">
+        <div class="slider-header"><span>L2+ 占比</span><span class="slider-val blue" id="pct2DispNew">40%</span></div>
+        <input type="range" class="pct-range" id="pct2New" min="25" max="80" step="1" value="40">
+        <div class="slider-marks"><span>25%</span><span>50%</span><span>80%</span></div>
+      </div>
+      <div class="slider-section">
+        <div class="slider-header"><span>L3+ 占比</span><span class="slider-val green" id="pct3DispNew">30%</span></div>
+        <input type="range" class="pct-range" id="pct3New" min="15" max="60" step="1" value="30">
+        <div class="slider-marks"><span>15%</span><span>40%</span><span>60%</span></div>
+      </div>
+      <div class="result-row">
+        <div class="r-box hl-blue"><div class="lbl">L2+ 商机数</div><div class="val" id="rL2New">360</div></div>
+        <div class="r-box hl-green"><div class="lbl">L3+ 商机数</div><div class="val" id="rL3New">270</div></div>
+      </div>
+      <div class="result-row" style="margin-top:8px;">
+        <div class="r-box"><div class="lbl">L2+ 增长</div><div class="val" id="rDiff2">+180</div></div>
+        <div class="r-box"><div class="lbl">L3+ 增长</div><div class="val" id="rDiff3">+150</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L2+/L3+ 增长趋势图 -->
+  <div class="growth-section">
+    <div class="card-title">L2+ / L3+ 绝对值增长趋势</div>
+    <div class="chart-wrap"><canvas id="growthChart"></canvas></div>
+  </div>
+
+  <!-- 服务备注 -->
+  <div class="note-card">
+    <div class="card-title">服务备注</div>
+    <ul class="note-list">
+      <li><span class="note-tag">保效兜底</span>保效兜底线，服务拉上限制</li>
+      <li><span class="note-tag">四星保效</span>大客户服务经理提供 <strong>业务定位 · 客群定位 · 市场定位 · 营销定位 · 业务接待</strong>，提升承接能力与承接效率 — 服务周期 <strong>半年</strong></li>
+      <li><span class="note-tag">五星保效</span>大客户服务经理提供 <strong>业务定位 · 客群定位 · 市场定位 · 营销定位 · 业务接待</strong>，提升承接能力与承接效率 — 服务周期 <strong>一年</strong></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const invCur=document.getElementById('invCur'),pct2Cur=document.getElementById('pct2Cur'),pct3Cur=document.getElementById('pct3Cur'),costCur=document.getElementById('costCur');
+const pct2New=document.getElementById('pct2New'),pct3New=document.getElementById('pct3New'),costNew=document.getElementById('costNew');
+const invDC=document.getElementById('invDispCur');
+const pct2DC=document.getElementById('pct2DispCur'),pct3DC=document.getElementById('pct3DispCur');
+const pct2DN=document.getElementById('pct2DispNew'),pct3DN=document.getElementById('pct3DispNew');
+const rL2C=document.getElementById('rL2Cur'),rL3C=document.getElementById('rL3Cur');
+const rL2N=document.getElementById('rL2New'),rL3N=document.getElementById('rL3New');
+const rD2=document.getElementById('rDiff2'),rD3=document.getElementById('rDiff3');
+const tierNew=document.getElementById('tierNew');
+
+let newVal=900000;
+
+function fmt(n){return n.toLocaleString('en-US');}
+function fmtW(n){return n>=10000?(n/10000).toFixed(n%10000===0?0:1)+'万':fmt(n);}
+
+function setActive(container,val){
+  container.querySelectorAll('.tier-btn').forEach(b=>{
+    b.classList.toggle('active',parseInt(b.dataset.val)===val);
+  });
+}
+
+tierNew.querySelectorAll('.tier-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    newVal=parseInt(b.dataset.val);
+    setActive(tierNew,newVal);
+    calc();
+  });
+});
+
+let chart;
+function initChart(){
+  const ctx=document.getElementById('growthChart').getContext('2d');
+  chart=new Chart(ctx,{
+    type:'line',
+    data:{labels:[],datasets:[
+      {label:'当前 L2+',data:[],borderColor:'#94a3b8',backgroundColor:'rgba(148,163,184,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2},
+      {label:'新方案 L2+',data:[],borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2},
+      {label:'当前 L3+',data:[],borderColor:'#86efac',backgroundColor:'rgba(134,239,172,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2,borderDash:[5,5]},
+      {label:'新方案 L3+',data:[],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2,borderDash:[5,5]}
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'top',labels:{font:{size:11},usePointStyle:true,padding:12}}},
+      scales:{
+        y:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.06)'},ticks:{font:{size:11}}},
+        x:{grid:{display:false},ticks:{font:{size:11}}}
+      }
+    }
+  });
+}
+
+function calc(){
+  const cC=parseFloat(costCur.value)||1000,cN=parseFloat(costNew.value)||1000;
+  const p2C=parseInt(pct2Cur.value),p3C=parseInt(pct3Cur.value);
+  const p2N=parseInt(pct2New.value),p3N=parseInt(pct3New.value);
+  const curVal=parseInt(invCur.value);
+
+  invDC.textContent='¥'+fmtW(curVal);
+  pct2DC.textContent=p2C+'%';pct3DC.textContent=p3C+'%';
+  pct2DN.textContent=p2N+'%';pct3DN.textContent=p3N+'%';
+
+  const tC=Math.floor(curVal/cC),tN=Math.floor(newVal/cN);
+  const l2C=Math.floor(tC*p2C/100),l3C=Math.floor(tC*p3C/100);
+  const l2N=Math.floor(tN*p2N/100),l3N=Math.floor(tN*p3N/100);
+  const d2=l2N-l2C,d3=l3N-l3C;
+
+  rL2C.textContent=fmt(l2C);rL3C.textContent=fmt(l3C);
+  rL2N.textContent=fmt(l2N);rL3N.textContent=fmt(l3N);
+  rD2.innerHTML=(d2>=0?'<span class="diff-badge">+'+fmt(d2)+'</span>':'<span class="diff-badge down">'+fmt(d2)+'</span>');
+  rD3.innerHTML=(d3>=0?'<span class="diff-badge">+'+fmt(d3)+'</span>':'<span class="diff-badge down">'+fmt(d3)+'</span>');
+
+  // Chart
+  const tiers=[430000,600000,900000,1300000];
+  const tierLabels=['43万','60万','90万','130万'];
+  const d=[];
+  tiers.forEach(t=>{
+    const tc=Math.floor(t/cC),tn=Math.floor(t/cN);
+    d.push({
+      l2c:Math.floor(tc*p2C/100),l3c:Math.floor(tc*p3C/100),
+      l2n:Math.floor(tn*p2N/100),l3n:Math.floor(tn*p3N/100)
+    });
+  });
+
+  chart.data.labels=tierLabels;
+  chart.data.datasets[0].data=d.map(x=>x.l2c);
+  chart.data.datasets[1].data=d.map(x=>x.l2n);
+  chart.data.datasets[2].data=d.map(x=>x.l3c);
+  chart.data.datasets[3].data=d.map(x=>x.l3n);
+  chart.data.datasets[0].label='当前 L2+ ('+p2C+'%)';
+  chart.data.datasets[1].label='新方案 L2+ ('+p2N+'%)';
+  chart.data.datasets[2].label='当前 L3+ ('+p3C+'%)';
+  chart.data.datasets[3].label='新方案 L3+ ('+p3N+'%)';
+  chart.update();
+}
+
+invCur.oninput=pct2Cur.oninput=pct3Cur.oninput=costCur.oninput=pct2New.oninput=pct3New.oninput=costNew.oninput=calc;
+initChart();calc();
+</script>
+</body>
+</html>
