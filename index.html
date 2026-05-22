@@ -15,15 +15,12 @@
     min-height: 100vh;
   }
   .container { max-width: 1100px; margin: 0 auto; }
-  .header { text-align: center; margin-bottom: 28px; padding-top: 12px; }
+  .header { text-align: center; margin-bottom: 24px; padding-top: 12px; }
   .header h1 { font-size: 32px; font-weight: 800; background: linear-gradient(90deg, #1e40af, #3b82f6, #1e40af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; }
   .header .subtitle { font-size: 14px; color: #94a3b8; margin-top: 10px; letter-spacing: 0.5px; }
-  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
   .col { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 14px; padding: 18px; }
-  .col.plan { border-color: #3b82f6; background: linear-gradient(180deg, #eff6ff, #f8fafc); }
-  .col-label { font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: 1px; }
-  .col.cur .col-label { color: #64748b; }
-  .col.plan .col-label { color: #2563eb; }
+  .col-label { font-size: 13px; font-weight: 700; margin-bottom: 14px; letter-spacing: 1px; color: #64748b; }
   .field { margin-bottom: 10px; }
   .field-label { font-size: 13px; color: #64748b; margin-bottom: 4px; }
   .field input[type="number"] {
@@ -46,17 +43,6 @@
   }
   .inv-marks { display: flex; justify-content: space-between; margin-top: 4px; }
   .inv-marks span { font-size: 11px; color: #94a3b8; }
-  .tier-selector { display: flex; gap: 6px; margin-bottom: 10px; }
-  .tier-btn {
-    flex: 1; padding: 8px 4px; border: 2px solid #e2e8f0; border-radius: 8px;
-    background: #fff; cursor: pointer; text-align: center; transition: all 0.2s;
-  }
-  .tier-btn:hover { border-color: #94a3b8; }
-  .tier-btn.active { border-color: #3b82f6; background: #dbeafe; }
-  .tier-btn .tier-val { font-size: 15px; font-weight: 800; color: #1e293b; display: block; }
-  .tier-btn .tier-label { font-size: 10px; color: #94a3b8; display: inline-block; margin-left: 3px; vertical-align: middle; }
-  .tier-btn.active .tier-val { color: #2563eb; }
-  .tier-btn.active .tier-label { color: #3b82f6; }
   .slider-section { margin-top: 2px; }
   .slider-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
   .slider-header span { font-size: 13px; color: #64748b; }
@@ -71,8 +57,6 @@
     -webkit-appearance: none; width: 20px; height: 20px;
     border-radius: 50%; background: #64748b; cursor: pointer;
   }
-  .blue-thumb input[type="range"].pct-range::-webkit-slider-thumb { background: #3b82f6; box-shadow: 0 2px 6px rgba(59,130,246,0.3); }
-  .green-thumb input[type="range"].pct-range::-webkit-slider-thumb { background: #16a34a; box-shadow: 0 2px 6px rgba(22,163,74,0.3); }
   .slider-marks { display: flex; justify-content: space-between; margin-top: 4px; }
   .slider-marks span { font-size: 11px; color: #94a3b8; }
   .result-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 12px; }
@@ -83,6 +67,23 @@
   .r-box.hl-blue .val { color: #2563eb; }
   .r-box.hl-green { border-color: #16a34a; background: #f0fdf4; }
   .r-box.hl-green .val { color: #16a34a; }
+  .staff-section { background: #fffbeb; border: 2px solid #fbbf24; border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+  .staff-section .staff-title { font-size: 14px; font-weight: 700; color: #92400e; margin-bottom: 14px; }
+  .staff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
+  .staff-item { background: #fff; border: 1px solid #fde68a; border-radius: 8px; padding: 12px; text-align: center; }
+  .staff-item label { font-size: 12px; color: #78350f; display: block; margin-bottom: 6px; }
+  .staff-item input[type="number"] {
+    width: 80px; padding: 6px 8px; border: 2px solid #fde68a; border-radius: 6px;
+    background: #fff; color: #1e293b; font-size: 20px; font-weight: 700; outline: none; text-align: center;
+  }
+  .staff-item input[type="number"]:focus { border-color: #f59e0b; }
+  .staff-item .staff-unit { font-size: 11px; color: #a16207; display: block; margin-top: 4px; }
+  .staff-result { background: #fef3c7; border-radius: 10px; padding: 14px; text-align: center; }
+  .staff-result .staff-result-label { font-size: 12px; color: #92400e; margin-bottom: 6px; }
+  .staff-result .staff-result-val { font-size: 28px; font-weight: 800; color: #b45309; }
+  .staff-result .staff-result-unit { font-size: 14px; color: #a16207; }
+  .staff-note { font-size: 12px; color: #b45309; margin-top: 12px; line-height: 1.7; background: rgba(251,191,36,0.15); border-radius: 8px; padding: 10px 14px; }
+  .staff-note strong { color: #92400e; }
   .growth-section { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px; margin-bottom: 16px; }
   .growth-section .card-title { font-size: 14px; font-weight: 600; color: #64748b; margin-bottom: 12px; }
   .chart-wrap { position: relative; height: 220px; }
@@ -93,8 +94,6 @@
   .note-list li:last-child { border-bottom: none; }
   .note-list li strong { color: #b45309; }
   .note-tag { display: inline-block; background: #fbbf24; color: #78350f; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; margin-right: 4px; vertical-align: middle; }
-  .diff-badge { display: inline-block; background: #22c55e; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 6px; }
-  .diff-badge.down { background: #ef4444; }
 </style>
 </head>
 <body>
@@ -103,67 +102,65 @@
     <div class="subtitle">报表归属：南粤大区SKA专享年度规划工具 《行业TOP说》商家经营复盘规划</div>
   </div>
 
-  <div class="compare">
-    <!-- 当前阶段 -->
-    <div class="col cur">
-      <div class="col-label">当前阶段</div>
-      <div class="field">
-        <div class="field-label">商机成本 <span class="unit">元/个</span></div>
-        <input type="number" id="costCur" value="1000" min="1" step="100">
-      </div>
-      <div class="inv-slider-wrap">
-        <div class="inv-slider-header"><span>投入金额</span><span class="inv-slider-val" id="invDispCur">¥60万</span></div>
-        <input type="range" class="inv-range" id="invCur" min="300000" max="1300000" step="10000" value="600000">
-        <div class="inv-marks"><span>30万</span><span>60万</span><span>90万</span><span>130万</span></div>
-      </div>
-      <div class="slider-section">
-        <div class="slider-header"><span>L2+ 占比</span><span class="slider-val blue" id="pct2DispCur">30%</span></div>
-        <input type="range" class="pct-range" id="pct2Cur" min="25" max="80" step="1" value="30">
-        <div class="slider-marks"><span>25%</span><span>50%</span><span>80%</span></div>
-      </div>
-      <div class="slider-section">
-        <div class="slider-header"><span>L3+ 占比</span><span class="slider-val green" id="pct3DispCur">20%</span></div>
-        <input type="range" class="pct-range" id="pct3Cur" min="15" max="60" step="1" value="20">
-        <div class="slider-marks"><span>15%</span><span>40%</span><span>60%</span></div>
-      </div>
-      <div class="result-row">
-        <div class="r-box hl-blue"><div class="lbl">L2+ 商机数</div><div class="val" id="rL2Cur">180</div></div>
-        <div class="r-box hl-green"><div class="lbl">L3+ 商机数</div><div class="val" id="rL3Cur">120</div></div>
-      </div>
+  <!-- 左侧当前阶段 + 右侧公司业务人数测算 -->
+  <div class="row">
+  <div class="col">
+    <div class="col-label">当前阶段</div>
+    <div class="field">
+      <div class="field-label">商机成本 <span class="unit">元/个</span></div>
+      <input type="number" id="costCur" value="1000" min="1" step="100">
     </div>
+    <div class="inv-slider-wrap">
+      <div class="inv-slider-header"><span>投入金额</span><span class="inv-slider-val" id="invDispCur">¥60万</span></div>
+      <input type="range" class="inv-range" id="invCur" min="300000" max="1300000" step="10000" value="600000">
+      <div class="inv-marks"><span>30万</span><span>60万</span><span>90万</span><span>130万</span></div>
+    </div>
+    <div class="slider-section">
+      <div class="slider-header"><span>L2+ 占比</span><span class="slider-val blue" id="pct2DispCur">30%</span></div>
+      <input type="range" class="pct-range" id="pct2Cur" min="25" max="80" step="1" value="30">
+      <div class="slider-marks"><span>25%</span><span>50%</span><span>80%</span></div>
+    </div>
+    <div class="slider-section">
+      <div class="slider-header"><span>L3+ 占比</span><span class="slider-val green" id="pct3DispCur">20%</span></div>
+      <input type="range" class="pct-range" id="pct3Cur" min="15" max="60" step="1" value="20">
+      <div class="slider-marks"><span>15%</span><span>40%</span><span>60%</span></div>
+    </div>
+    <div class="result-row">
+      <div class="r-box hl-blue"><div class="lbl">L2+ 商机数</div><div class="val" id="rL2Cur">180</div></div>
+      <div class="r-box hl-green"><div class="lbl">L3+ 商机数</div><div class="val" id="rL3Cur">120</div></div>
+    </div>
+  </div>
 
-    <!-- 新方案规划 -->
-    <div class="col plan blue-thumb">
-      <div class="col-label">新方案规划</div>
-      <div class="field">
-        <div class="field-label">商机成本 <span class="unit">元/个</span></div>
-        <input type="number" id="costNew" value="1000" min="1" step="100">
+  <!-- 公司业务人数测算 -->
+  <div class="staff-section">
+    <div class="staff-title">公司业务人数与 L2+ 买家数量预估</div>
+    <div class="staff-grid">
+      <div class="staff-item">
+        <label>公司业务人数</label>
+        <input type="number" id="staffCount" value="3" min="1" max="100">
+        <span class="staff-unit">人</span>
       </div>
-      <div class="tier-selector" id="tierNew">
-        <div class="tier-btn" data-val="430000"><span class="tier-val">43万</span> <span class="tier-label">三星</span></div>
-        <div class="tier-btn" data-val="600000"><span class="tier-val">60万</span> <span class="tier-label">四星</span></div>
-        <div class="tier-btn active" data-val="900000"><span class="tier-val">90万</span> <span class="tier-label">五星</span></div>
-        <div class="tier-btn" data-val="1300000"><span class="tier-val">130万</span> <span class="tier-label">五星全年</span></div>
+      <div class="staff-item">
+        <label>每人承接 L2+ 商机</label>
+        <input type="number" id="l2PerPerson" value="4" min="1" max="20">
+        <span class="staff-unit">个/天/人</span>
       </div>
-      <div class="slider-section">
-        <div class="slider-header"><span>L2+ 占比</span><span class="slider-val blue" id="pct2DispNew">40%</span></div>
-        <input type="range" class="pct-range" id="pct2New" min="25" max="80" step="1" value="40">
-        <div class="slider-marks"><span>25%</span><span>50%</span><span>80%</span></div>
-      </div>
-      <div class="slider-section">
-        <div class="slider-header"><span>L3+ 占比</span><span class="slider-val green" id="pct3DispNew">30%</span></div>
-        <input type="range" class="pct-range" id="pct3New" min="15" max="60" step="1" value="30">
-        <div class="slider-marks"><span>15%</span><span>40%</span><span>60%</span></div>
-      </div>
-      <div class="result-row">
-        <div class="r-box hl-blue"><div class="lbl">L2+ 商机数</div><div class="val" id="rL2New">360</div></div>
-        <div class="r-box hl-green"><div class="lbl">L3+ 商机数</div><div class="val" id="rL3New">270</div></div>
-      </div>
-      <div class="result-row" style="margin-top:8px;">
-        <div class="r-box"><div class="lbl">L2+ 增长</div><div class="val" id="rDiff2">+180</div></div>
-        <div class="r-box"><div class="lbl">L3+ 增长</div><div class="val" id="rDiff3">+150</div></div>
+      <div class="staff-item">
+        <label>年工作天数</label>
+        <input type="number" id="workDays" value="250" min="1" max="365">
+        <span class="staff-unit">天</span>
       </div>
     </div>
+    <div class="staff-result">
+      <div class="staff-result-label">公司年度 L2+ 商机需求总量</div>
+      <div class="staff-result-val" id="annualNeed">3,000</div>
+      <div class="staff-result-unit">个/年</div>
+    </div>
+    <div class="staff-note">
+      <strong>人效标准：</strong>一个业务员一天承接的 L2+ 保底 ≥3 个，L2+ 保底 ≤5 个，工作量才是符合标准。<br>
+      低于标准就是浪费时间，浪费工资。
+    </div>
+  </div>
   </div>
 
   <!-- L2+/L3+ 增长趋势图 -->
@@ -185,33 +182,13 @@
 
 <script>
 const invCur=document.getElementById('invCur'),pct2Cur=document.getElementById('pct2Cur'),pct3Cur=document.getElementById('pct3Cur'),costCur=document.getElementById('costCur');
-const pct2New=document.getElementById('pct2New'),pct3New=document.getElementById('pct3New'),costNew=document.getElementById('costNew');
 const invDC=document.getElementById('invDispCur');
 const pct2DC=document.getElementById('pct2DispCur'),pct3DC=document.getElementById('pct3DispCur');
-const pct2DN=document.getElementById('pct2DispNew'),pct3DN=document.getElementById('pct3DispNew');
 const rL2C=document.getElementById('rL2Cur'),rL3C=document.getElementById('rL3Cur');
-const rL2N=document.getElementById('rL2New'),rL3N=document.getElementById('rL3New');
-const rD2=document.getElementById('rDiff2'),rD3=document.getElementById('rDiff3');
-const tierNew=document.getElementById('tierNew');
-
-let newVal=900000;
+const staffCount=document.getElementById('staffCount'),l2PerPerson=document.getElementById('l2PerPerson'),workDays=document.getElementById('workDays'),annualNeed=document.getElementById('annualNeed');
 
 function fmt(n){return n.toLocaleString('en-US');}
 function fmtW(n){return n>=10000?(n/10000).toFixed(n%10000===0?0:1)+'万':fmt(n);}
-
-function setActive(container,val){
-  container.querySelectorAll('.tier-btn').forEach(b=>{
-    b.classList.toggle('active',parseInt(b.dataset.val)===val);
-  });
-}
-
-tierNew.querySelectorAll('.tier-btn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    newVal=parseInt(b.dataset.val);
-    setActive(tierNew,newVal);
-    calc();
-  });
-});
 
 let chart;
 function initChart(){
@@ -219,10 +196,8 @@ function initChart(){
   chart=new Chart(ctx,{
     type:'line',
     data:{labels:[],datasets:[
-      {label:'当前 L2+',data:[],borderColor:'#94a3b8',backgroundColor:'rgba(148,163,184,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2},
-      {label:'新方案 L2+',data:[],borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2},
-      {label:'当前 L3+',data:[],borderColor:'#86efac',backgroundColor:'rgba(134,239,172,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2,borderDash:[5,5]},
-      {label:'新方案 L3+',data:[],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2,borderDash:[5,5]}
+      {label:'L2+',data:[],borderColor:'#3b82f6',backgroundColor:'rgba(59,130,246,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2},
+      {label:'L3+',data:[],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.08)',fill:true,tension:0.3,pointRadius:4,pointHoverRadius:6,borderWidth:2,borderDash:[5,5]}
     ]},
     options:{
       responsive:true,maintainAspectRatio:false,
@@ -235,51 +210,50 @@ function initChart(){
   });
 }
 
+function calcStaff(){
+  const sc=parseInt(staffCount.value)||1;
+  const lp=parseInt(l2PerPerson.value)||1;
+  const wd=parseInt(workDays.value)||250;
+  const annual=sc*lp*wd;
+  annualNeed.textContent=fmt(annual);
+}
+
 function calc(){
-  const cC=parseFloat(costCur.value)||1000,cN=parseFloat(costNew.value)||1000;
+  const cC=parseFloat(costCur.value)||1000;
   const p2C=parseInt(pct2Cur.value),p3C=parseInt(pct3Cur.value);
-  const p2N=parseInt(pct2New.value),p3N=parseInt(pct3New.value);
   const curVal=parseInt(invCur.value);
 
   invDC.textContent='¥'+fmtW(curVal);
   pct2DC.textContent=p2C+'%';pct3DC.textContent=p3C+'%';
-  pct2DN.textContent=p2N+'%';pct3DN.textContent=p3N+'%';
 
-  const tC=Math.floor(curVal/cC),tN=Math.floor(newVal/cN);
+  const tC=Math.floor(curVal/cC);
   const l2C=Math.floor(tC*p2C/100),l3C=Math.floor(tC*p3C/100);
-  const l2N=Math.floor(tN*p2N/100),l3N=Math.floor(tN*p3N/100);
-  const d2=l2N-l2C,d3=l3N-l3C;
 
   rL2C.textContent=fmt(l2C);rL3C.textContent=fmt(l3C);
-  rL2N.textContent=fmt(l2N);rL3N.textContent=fmt(l3N);
-  rD2.innerHTML=(d2>=0?'<span class="diff-badge">+'+fmt(d2)+'</span>':'<span class="diff-badge down">'+fmt(d2)+'</span>');
-  rD3.innerHTML=(d3>=0?'<span class="diff-badge">+'+fmt(d3)+'</span>':'<span class="diff-badge down">'+fmt(d3)+'</span>');
 
-  // Chart
   const tiers=[430000,600000,900000,1300000];
   const tierLabels=['43万','60万','90万','130万'];
   const d=[];
   tiers.forEach(t=>{
-    const tc=Math.floor(t/cC),tn=Math.floor(t/cN);
+    const tc=Math.floor(t/cC);
     d.push({
-      l2c:Math.floor(tc*p2C/100),l3c:Math.floor(tc*p3C/100),
-      l2n:Math.floor(tn*p2N/100),l3n:Math.floor(tn*p3N/100)
+      l2:Math.floor(tc*p2C/100),
+      l3:Math.floor(tc*p3C/100)
     });
   });
 
   chart.data.labels=tierLabels;
-  chart.data.datasets[0].data=d.map(x=>x.l2c);
-  chart.data.datasets[1].data=d.map(x=>x.l2n);
-  chart.data.datasets[2].data=d.map(x=>x.l3c);
-  chart.data.datasets[3].data=d.map(x=>x.l3n);
-  chart.data.datasets[0].label='当前 L2+ ('+p2C+'%)';
-  chart.data.datasets[1].label='新方案 L2+ ('+p2N+'%)';
-  chart.data.datasets[2].label='当前 L3+ ('+p3C+'%)';
-  chart.data.datasets[3].label='新方案 L3+ ('+p3N+'%)';
+  chart.data.datasets[0].data=d.map(x=>x.l2);
+  chart.data.datasets[1].data=d.map(x=>x.l3);
+  chart.data.datasets[0].label='L2+ ('+p2C+'%)';
+  chart.data.datasets[1].label='L3+ ('+p3C+'%)';
   chart.update();
+
+  calcStaff();
 }
 
-invCur.oninput=pct2Cur.oninput=pct3Cur.oninput=costCur.oninput=pct2New.oninput=pct3New.oninput=costNew.oninput=calc;
+invCur.oninput=pct2Cur.oninput=pct3Cur.oninput=costCur.oninput=calc;
+staffCount.oninput=l2PerPerson.oninput=workDays.oninput=calcStaff;
 initChart();calc();
 </script>
 </body>
